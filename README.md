@@ -82,18 +82,23 @@ rccar_ota_project/
 
 ## 팀원 간 역할 분배
 
-### 박찬혁 — OTA 시스템 · Qt GUI · AI 음성
-- PySide6 관제 GUI 및 OTA 업로드 흐름 구현
-- MQTT/ESP32 브리지 및 256B 청크·CRC·재전송 프로토콜 설계
+### 박찬혁 — OTA 시스템 · AI 음성
 - Dual-Bank OTA 수신·기록·BankSwap 구현 (최종 시연 채택)
+- OTA 전송 프로토콜 설계 (256B 청크, CRC32 검증, ARQ 재전송)
+- 기존 관제 GUI에 OTA 업로드 화면·진행률 대시보드 확장
 - GMS 기반 STT·LLM·TTS AI 음성 기능
 
-### 이승재 — RA6E1 펌웨어 · 주행/센서 제어
+### 이승재 — RA6E1 펌웨어 · 무선 제어 체인
+- PySide6 관제 GUI 및 MQTT 명령 발행 (주행 제어 기반 구현)
+- ESP32 게이트웨이: MQTT 수신 → JSON 파싱 → SPI 1바이트 변환
 - SPI Slave/BUSY 기반 차량 명령 수신 처리
 - MotorHat(PCA9685) I2C 기반 주행·조향 제어
 - HC-SR04 초음파 충돌 회피 펌웨어 작성
 - 주행·센서 통합 테스트 및 시연 펌웨어 안정화
 - MCUboot 부트로더 기반 OTA 방식 독립 시도 (별도 저장소)
+
+> 무선 제어 체인(GUI → MQTT → ESP32 → SPI → 모터)을 이승재가 먼저 구축하고,
+> 그 위에 박찬혁이 OTA 전송·Dual-Bank 기록과 AI 음성 기능을 확장했다.
 
 ---
 
