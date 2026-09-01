@@ -14,7 +14,7 @@ SSAFY 임베디드 트랙 15기 1학기 관통 PJT. 차량이 출고 후에도 �
 ```mermaid
 flowchart LR
     BASE["구동·제어 베이스 (이승재)<br/>RA6E1 주행 펌웨어<br/>관제 GUI · MQTT · ESP32 · SPI 명령 체인"]
-    A["Dual-Bank OTA · AI 음성 제어 (박찬혁)<br/>이 저장소 rccar_pjt/ · 최종 시연 채택"]
+    A["Dual-Bank OTA · AI 음성 제어 (팀원)<br/>이 저장소 rccar_pjt/ · 최종 시연 채택"]
     B["MCUboot 부트로더 기반 OTA (이승재)<br/>별도 저장소 · 슬롯 교체 검증까지"]
 
     BASE --> A
@@ -98,7 +98,7 @@ MCUboot 부트로더 갈래는 [rccar-mcuboot-ota](https://github.com/SJLee-83/r
 
 ## 팀원 간 역할 분배
 
-### 박찬혁 - OTA 시스템 · AI 음성
+### 팀원 - OTA 시스템 · AI 음성
 - Dual-Bank OTA 수신·기록·BankSwap 구현 (최종 시연 채택)
 - OTA 전송 프로토콜 설계 (256B 청크, CRC32 검증, ARQ 재전송)
 - 기존 관제 GUI 에 OTA 업로드 화면·진행률 대시보드 확장
@@ -119,7 +119,7 @@ MCUboot 부트로더 갈래는 [rccar-mcuboot-ota](https://github.com/SJLee-83/r
 
 OTA 는 두 접근을 병행 시도한 뒤 하나를 최종 채택. Dual-Bank 는 완성해 시연에 사용했고, MCUboot 는 슬롯 교체 검증까지 도달했으나 무선 전송 미완.
 
-| 항목 | Dual-Bank (박찬혁, 채택) | MCUboot (이승재) |
+| 항목 | Dual-Bank (팀원, 채택) | MCUboot (이승재) |
 |------|------------------------|-----------------|
 | 부트로더 | 없음 (앱이 직접 수행) | 있음 (MCUboot) |
 | 검증 | CRC32 | ECDSA P-256 서명 |
