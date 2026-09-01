@@ -11,12 +11,14 @@ SSAFY 임베디드 트랙 15기 1학기 관통 PJT. 차량이 출고 후에도 �
 
 구동·제어 베이스를 먼저 구축하고, 그 위에서 OTA 구현이 두 갈래로 분기.
 
-```
-구동·제어 베이스 (이승재)
-  RA6E1 주행 펌웨어 + 관제 GUI -> MQTT -> ESP32 -> SPI 명령 체인
-   |
-   +-- Dual-Bank OTA · AI 음성 제어 (박찬혁)   이 저장소 rccar_pjt/, 최종 시연 채택
-   +-- MCUboot 부트로더 기반 OTA (이승재)      별도 저장소, 슬롯 교체 검증까지 진행
+```mermaid
+flowchart LR
+    BASE["구동·제어 베이스 (이승재)<br/>RA6E1 주행 펌웨어<br/>관제 GUI · MQTT · ESP32 · SPI 명령 체인"]
+    A["Dual-Bank OTA · AI 음성 제어 (박찬혁)<br/>이 저장소 rccar_pjt/ · 최종 시연 채택"]
+    B["MCUboot 부트로더 기반 OTA (이승재)<br/>별도 저장소 · 슬롯 교체 검증까지"]
+
+    BASE --> A
+    BASE --> B
 ```
 
 베이스 무선 제어 체인의 원형은 [rccar-mcuboot-ota](https://github.com/SJLee-83/rccar-mcuboot-ota) 의 `gateway/` 이고, 이 저장소 `rccar_pjt/OTA/` 의 `esp32.ino` · `mainwindow.py` 는 원형에 OTA 전송 기능이 얹힌 확장본.
@@ -25,26 +27,22 @@ SSAFY 임베디드 트랙 15기 1학기 관통 PJT. 차량이 출고 후에도 �
 
 ## 시스템 아키텍처
 
-```
-[PC 관제 GUI]                    [Raspberry Pi 5]
- PySide6                          SPH0645 I2S 마이크
-   │ MQTT                           │ STT→LLM→TTS
-   ▼                                ▼
-┌─────────────────────────────────────────┐
-│        MQTT Broker (Mosquitto, 1883)     │
-└─────────────────────────────────────────┘
-   │ MQTT
-   ▼
-[ESP32 게이트웨이]
-   │ SPI (Master) + BUSY GPIO 핸드셰이크
-   ▼
-[Renesas RA6E1 (SPI Slave)]
-   │ Dual-Bank Code Flash 제어 → CRC32 검증 → BankSwap → Reset
-   │ I2C
-   ▼
-[PCA9685 Motor HAT] → 서보(조향) + DC 모터(구동)
-   +
-[HC-SR04 초음파 센서] → 전방 충돌 감지
+```mermaid
+flowchart TB
+    GUI["PC 관제 GUI<br/>PySide6"]
+    PI["Raspberry Pi 5<br/>SPH0645 I2S 마이크<br/>STT · LLM · TTS"]
+    BROKER["MQTT Broker<br/>Mosquitto 1883"]
+    ESP["ESP32 게이트웨이"]
+    RA["Renesas RA6E1 · SPI Slave<br/>Dual-Bank Code Flash 제어<br/>CRC32 검증 · BankSwap · Reset"]
+    MOTOR["PCA9685 Motor HAT<br/>서보 조향 + DC 모터 구동"]
+    SONIC["HC-SR04 초음파 센서<br/>전방 충돌 감지"]
+
+    GUI -->|MQTT| BROKER
+    PI -->|MQTT| BROKER
+    BROKER -->|MQTT| ESP
+    ESP -->|"SPI Master + BUSY GPIO"| RA
+    RA -->|I2C| MOTOR
+    SONIC -->|GPIO| RA
 ```
 
 | 구간 | 프로토콜 | 용도 |
