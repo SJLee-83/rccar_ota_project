@@ -72,9 +72,17 @@ OTA 로 펌웨어를 바꾸면 기능이 생기는 것을 보이는 시연 구�
 - **V1.0.0 (업데이트 전)**: 장애물 감지 없이 계속 주행
 - **V2.0.0 (업데이트 후)**: 전방 20cm 장애물 감지 시 정지, 28cm 이상 3회 연속 확인 후 재출발 (히스테리시스)
 
+![충돌 회피 시연](docs/images/demo_collision_avoidance.gif)
+
+V2.0.0 적용 후 장애물 앞 정지 (발표 시연 영상 발췌)
+
 ### 3. AI 음성 제어
 
 라즈베리파이 5 + SPH0645 I2S 마이크로 음성 캡처 후 SSAFY GMS 프록시를 거쳐 STT → LLM → TTS 파이프라인 실행.
+
+![음성 제어 시연](docs/images/demo_voice_control.gif)
+
+음성 명령에 따른 차량 구동 (발표 시연 영상 발췌, 팀원 담당 기능)
 
 ---
 
@@ -88,7 +96,8 @@ rccar_ota_project/
 │   ├── ai_audio/         #   AI 음성 비서 (라즈베리파이)
 │   └── 최종발표.pptx
 ├── docs/
-│   └── 01_팀프로젝트_전체정리.md
+│   ├── 01_팀프로젝트_전체정리.md
+│   └── images/           #   README gif
 └── README.md
 ```
 
