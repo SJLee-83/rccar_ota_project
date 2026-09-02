@@ -3,6 +3,15 @@
  *
  *  Created on: 2024. 5. 14.
  *      Author: SSAFY
+ *
+ *  PCA9685 레지스터 정의(__MODE1 · __PRESCALE · __LED0_ON_L 등)와 PWM 제어 API 는
+ *  Adafruit Motor HAT Python 라이브러리를 C 로 옮긴 것이다.
+ *  https://github.com/adafruit/Adafruit-Motor-HAT-Python-Library
+ *  Copyright (c) Adafruit Industries. MIT License.
+ *  ("MIT license, all text above must be included in any redistribution")
+ *
+ *  이 저장소의 변경 사항: I2C 백엔드를 Renesas FSP(R_IIC_MASTER_*)로 이식하고
+ *  전송 완료를 콜백으로 동기화하도록 수정.
  */
 
 #ifndef MOTORHAT_H_
